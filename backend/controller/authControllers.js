@@ -32,7 +32,43 @@ const registerUser = async (req, res) => {
     });
   }
 };
+//login function
+const loginUser= async(req,res)=>{
+  try{
+    const{email,password}=req.body;
+    //check that user exist  or not
+    const user=await User.findOne({email});
+    //if user not found in db
+    if(!user){
+      return res.status(400).json({
+        message: "Invalid email or password",
+      });
+    }
+    //password verify
+    const isMatch= await bcrypt.compare(password, user.password);
+    //check password is crct or not
+    if(!isMatch){
+      return res.status(400).json({
+        message: "Invalid email or password",
+      });
+    }
+    //login successful response
+    return res.status(200).json({
+  message: "Login successful",
+  _id: user._id,
+  name: user.name,
+  email: user.email,
+});
+  }
+  catch(error){
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 
 module.exports = {
   registerUser,
+  loginUser,
 };
