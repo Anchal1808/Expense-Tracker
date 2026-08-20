@@ -1,10 +1,22 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+// React library imports
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-createRoot(document.getElementById('root')).render(
+// BrowserRouter is used for client-side routing
+import { BrowserRouter } from "react-router-dom";
+
+// Global CSS
+import "./index.css";
+
+// Main App component
+import App from "./App.jsx";
+
+// Render the React application
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    {/* BrowserRouter enables navigation between pages */}
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>
+);
