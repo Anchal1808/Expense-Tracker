@@ -245,7 +245,8 @@ function RecentTransactions({ transactions }) {
       <div className="flex flex-col divide-y divide-white/[0.06]">
         {transactions.map((t) => {
           const Icon = CATEGORY_ICON[t.category] || MoreHorizontal;
-          const isIncome = false;
+          const isIncome = t.type==="income";
+          const displayAmount = Number(t.amount);
           return (
             <div key={t._id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
               <div
@@ -273,7 +274,7 @@ function RecentTransactions({ transactions }) {
                 }`}
               >
                 {isIncome ? "+" : "-"}
-                {formatINR(t.amount)}
+                {formatINR(displayAmount)}
               </span>
             </div>
           );
@@ -596,12 +597,18 @@ function ProfileMenu() {
 function Dashboard() {
   const [modal, setModal] = useState(null); // "expense" | "income" | null
 const [expenses, setExpenses] = useState([]);
+const [income, setIncome] = useState([]);
 
 const totalExpenses = expenses.reduce(
   (sum, expense) => sum + Number(expense.amount),
   0
 );
-
+const totalIncome = income.reduce(
+  (sum, item) => sum + Number(item.amount),
+  0
+);
+const totalBalance = totalIncome - totalExpenses;
+const totalSavings = totalIncome - totalExpenses;
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
@@ -626,6 +633,31 @@ const totalExpenses = expenses.reduce(
     };
 
     fetchExpenses();
+
+const fetchIncome = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(
+      "http://localhost:5000/api/income",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("Income:", data);
+    setIncome(data);
+  } catch (error) {
+    console.error("Failed to fetch income:", error);
+  }
+};
+
+fetchIncome();
+
   }, []);
 
 
@@ -661,10 +693,10 @@ const totalExpenses = expenses.reduce(
 
         {/* SUMMARY CARDS */}
         <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard label="Total Balance" value={SUMMARY.balance} icon={Wallet} tint="#f97316" />
-          <StatCard label="Total Income" value={SUMMARY.income} icon={TrendingUp} tint="#34d399" />
+          <StatCard label="Total Balance" value={totalBalance} icon={Wallet} tint="#f97316" />
+          <StatCard label="Total Income" value={totalIncome} icon={TrendingUp} tint="#34d399" />
           <StatCard label="Total Expenses" value={totalExpenses} icon={TrendingDown} tint="#f87171" />
-          <StatCard label="Savings" value={SUMMARY.savings} icon={PiggyBank} tint="#a855f7" />
+          <StatCard label="Savings" value={totalSavings} icon={PiggyBank} tint="#a855f7" />
         </div>
 
         {/* CHARTS */}
@@ -694,7 +726,12 @@ const totalExpenses = expenses.reduce(
         {/* TRANSACTIONS + BUDGET */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <RecentTransactions transactions={expenses} />
+         <RecentTransactions
+  transactions={[
+    ...expenses.map((expense) => ({ ...expense, type: "expense" })),
+    ...income.map((item) => ({ ...item, type: "income" })),
+  ]}
+/>
           </div>
           <MonthlyBudget budget={BUDGET} />
         </div>
