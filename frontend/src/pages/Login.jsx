@@ -91,7 +91,12 @@ const handleSubmit = async (e) => {
     localStorage.setItem("token", data.token);
 
     // Save user information
-    localStorage.setItem("user", JSON.stringify(data.user));
+    const userProfile = data.user || {
+      _id: data._id,
+      name: data.name,
+      email: data.email,
+    };
+    localStorage.setItem("user", JSON.stringify(userProfile));
 
     alert("Login successful!");
 
