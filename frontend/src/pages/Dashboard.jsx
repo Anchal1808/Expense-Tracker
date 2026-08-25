@@ -393,7 +393,7 @@ function BudgetModal({ currentLimit, onClose, onSuccess }) {
       setLoading(true);
       const token = localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:5000/api/budget", {
+      const response = await fetch("https://expense-tracker-9qyd.onrender.com/api/budget", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -504,7 +504,7 @@ function TransactionModal({ mode, onClose, onSuccess }) {
 
     if (mode === "income") {
       try {
-        const response = await fetch("http://localhost:5000/api/income", {
+        const response = await fetch("https://expense-tracker-9qyd.onrender.com/api/income", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -537,7 +537,7 @@ function TransactionModal({ mode, onClose, onSuccess }) {
 
     // Expense Mode
     try {
-      const response = await fetch("http://localhost:5000/api/expenses", {
+      const response = await fetch("https://expense-tracker-9qyd.onrender.com/api/expenses", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -771,7 +771,7 @@ function Dashboard() {
 
     try {
       // 1. Fetch user profile
-      const userRes = await fetch("http://localhost:5000/api/auth/me", {
+      const userRes = await fetch("https://expense-tracker-9qyd.onrender.com/api/auth/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (userRes.ok) {
@@ -784,7 +784,7 @@ function Dashboard() {
       }
 
       // 2. Fetch expenses
-      const expRes = await fetch("http://localhost:5000/api/expenses", {
+      const expRes = await fetch("https://expense-tracker-9qyd.onrender.com/api/expenses", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (expRes.ok) {
@@ -793,7 +793,7 @@ function Dashboard() {
       }
 
       // 3. Fetch income
-      const incRes = await fetch("http://localhost:5000/api/income", {
+      const incRes = await fetch("https://expense-tracker-9qyd.onrender.com/api/income", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (incRes.ok) {
@@ -802,7 +802,7 @@ function Dashboard() {
       }
 
       // 4. Fetch budget
-      const budRes = await fetch("http://localhost:5000/api/budget", {
+      const budRes = await fetch("https://expense-tracker-9qyd.onrender.com/api/budget", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (budRes.ok) {
