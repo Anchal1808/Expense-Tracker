@@ -10,40 +10,16 @@ import Footer from "../components/Footer";
 
 function LandingPage() {
   return (
-    <div className="relative min-h-screen bg-[#050711] text-slate-100 selection:bg-orange-500 selection:text-white font-sans antialiased overflow-x-hidden">
-      {/* Background Ambient Grid & Radial Glow */}
-      <div className="pointer-events-none fixed inset-0 z-0 bg-grid-pattern opacity-40" />
-      <div className="pointer-events-none fixed inset-0 z-0 bg-radial-glow opacity-80" />
-
-      {/* Main Content Layers */}
-      <div className="relative z-10">
-        {/* Floating Glass Navigation Header */}
-        <Navbar />
-
-        {/* Hero Section */}
-        <Hero />
-
-        {/* Key Metrics & Trust Bar */}
-        <StatsBar />
-
-        {/* Features Bento Grid */}
-        <Features />
-
-        {/* 3-Step Roadmap */}
-        <HowItWorks />
-
-        {/* Executive Testimonials */}
-        <Testimonials />
-
-        {/* Interactive FAQ */}
-        <FAQ />
-
-        {/* High-Impact CTA Banner */}
-        <CTABanner />
-
-        {/* Footer */}
-        <Footer />
-      </div>
+    <div className="min-h-screen bg-[#090C15] text-slate-100 selection:bg-emerald-500 selection:text-slate-950 font-sans antialiased overflow-x-hidden">
+      <Navbar />
+      <Hero />
+      <StatsBar />
+      <Features />
+      <HowItWorks />
+      <Testimonials />
+      <FAQ />
+      <CTABanner />
+      <Footer />
     </div>
   );
 }

@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import BrandLogo from "../components/BrandLogo";
 import {
   Wallet,
   TrendingUp,
-  TrendingDown,
+  ArrowDownRight,
   PiggyBank,
   Plus,
   Minus,
@@ -19,7 +20,6 @@ import {
   HeartPulse,
   MoreHorizontal,
   Edit2,
-  DollarSign,
 } from "lucide-react";
 
 /* =========================================================
@@ -30,13 +30,13 @@ const formatINR = (n) =>
   `₹${Math.abs(Number(n) || 0).toLocaleString("en-IN")}`;
 
 /* =========================================================
-   SMALL UI PRIMITIVES
+   UI PRIMITIVES (Linear / Mercury Minimalist)
 ========================================================= */
 
-function GlassCard({ className = "", children }) {
+function SurfaceCard({ className = "", children }) {
   return (
     <div
-      className={`rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.35)] ${className}`}
+      className={`rounded-2xl border border-slate-800 bg-[#0E1322] shadow-sm ${className}`}
     >
       {children}
     </div>
@@ -45,63 +45,63 @@ function GlassCard({ className = "", children }) {
 
 function StatCard({ label, value, icon: Icon, tint, sub }) {
   return (
-    <GlassCard className="p-5 sm:p-6">
+    <SurfaceCard className="p-5 sm:p-6">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-gray-400">
+          <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
             {label}
           </p>
-          <p className="mt-2 text-2xl font-bold text-white sm:text-[26px]">
+          <p className="mt-2 text-2xl sm:text-[26px] font-bold text-white tracking-tight">
             {formatINR(value)}
           </p>
-          {sub && <p className="mt-1 text-xs text-gray-500">{sub}</p>}
+          {sub && <p className="mt-1 text-xs text-slate-400">{sub}</p>}
         </div>
         <div
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
-          style={{ backgroundColor: `${tint}1A` }}
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-800 border border-slate-700"
         >
-          <Icon size={20} style={{ color: tint }} />
+          <Icon size={18} style={{ color: tint }} />
         </div>
       </div>
-    </GlassCard>
+    </SurfaceCard>
   );
 }
 
 /* =========================================================
-   EXPENSE BAR CHART (dependency-free SVG)
+   EXPENSE BAR CHART (Clean SVG)
 ========================================================= */
 
 function ExpenseChart({ data }) {
   const max = Math.max(...data.map((d) => d.amount), 1);
 
   return (
-    <GlassCard className="p-6">
+    <SurfaceCard className="p-6 flex flex-col justify-between">
       <div className="mb-6 flex items-center justify-between">
-        <h3 className="text-base font-semibold text-white">Expense Chart</h3>
-        <span className="text-xs text-gray-500">Last 6 months</span>
+        <div>
+          <h3 className="text-base font-semibold text-white">Expense Velocity</h3>
+          <p className="text-xs text-slate-400 mt-0.5">Last 6 months spending</p>
+        </div>
+        <span className="text-xs font-medium text-slate-400">Monthly breakdown</span>
       </div>
 
-      <div className="flex h-52 items-end justify-between gap-3 sm:gap-5">
+      <div className="flex h-48 items-end justify-between gap-3 sm:gap-4 pt-2 border-b border-slate-800 pb-2">
         {data.map((d) => {
           const heightPct = Math.max((d.amount / max) * 100, 6);
           const isLatest = d === data[data.length - 1];
           return (
-            <div key={d.month} className="flex flex-1 flex-col items-center gap-2">
-              <div className="relative flex h-40 w-full items-end justify-center">
+            <div key={d.month} className="flex flex-1 flex-col items-center gap-2 h-full justify-end">
+              <div className="relative flex h-36 w-full items-end justify-center">
                 <div
-                  className="w-full max-w-[34px] rounded-t-lg transition-all duration-300"
-                  style={{
-                    height: `${heightPct}%`,
-                    background: isLatest
-                      ? "linear-gradient(180deg,#fb923c,#f97316)"
-                      : "rgba(255,255,255,0.10)",
-                    boxShadow: isLatest ? "0 8px 24px rgba(249,115,22,0.35)" : "none",
-                  }}
+                  className={`w-full max-w-[32px] rounded-t-md transition-all duration-200 ${
+                    isLatest
+                      ? "bg-emerald-500 shadow-sm"
+                      : "bg-slate-700/60 hover:bg-slate-700"
+                  }`}
+                  style={{ height: `${heightPct}%` }}
                 />
               </div>
               <span
-                className={`text-[11px] font-medium ${
-                  isLatest ? "text-orange-400 font-bold" : "text-gray-500"
+                className={`text-[11px] ${
+                  isLatest ? "text-emerald-400 font-semibold" : "text-slate-400"
                 }`}
               >
                 {d.month}
@@ -110,23 +110,23 @@ function ExpenseChart({ data }) {
           );
         })}
       </div>
-    </GlassCard>
+    </SurfaceCard>
   );
 }
 
 /* =========================================================
-   CATEGORY DONUT (CSS conic-gradient)
+   CATEGORY DONUT (CSS Conic-Gradient)
 ========================================================= */
 
 const CATEGORY_COLORS = {
-  Food: "#f97316",
-  Shopping: "#a855f7",
-  Travel: "#38bdf8",
-  Housing: "#34d399",
-  Bills: "#fbbf24",
-  Entertainment: "#f472b6",
-  Health: "#ec4899",
-  Other: "#94a3b8",
+  Food: "#F97316",
+  Shopping: "#A855F7",
+  Travel: "#38BDF8",
+  Housing: "#34D399",
+  Bills: "#FBBF24",
+  Entertainment: "#F472B6",
+  Health: "#EC4899",
+  Other: "#94A3B8",
 };
 
 function CategoryChart({ categories }) {
@@ -134,14 +134,14 @@ function CategoryChart({ categories }) {
 
   if (total === 0 || categories.length === 0) {
     return (
-      <GlassCard className="p-6 flex flex-col justify-between">
-        <h3 className="text-base font-semibold text-white mb-6">
-          Category-wise Expenses
+      <SurfaceCard className="p-6 flex flex-col justify-between">
+        <h3 className="text-base font-semibold text-white mb-2">
+          Category Distribution
         </h3>
-        <div className="flex flex-col items-center justify-center py-10 text-gray-500 text-sm">
+        <div className="flex flex-col items-center justify-center py-12 text-slate-400 text-sm">
           <p>No expenses recorded yet</p>
         </div>
-      </GlassCard>
+      </SurfaceCard>
     );
   }
 
@@ -150,7 +150,7 @@ function CategoryChart({ categories }) {
       const start = (cumulative / total) * 360;
       const nextCumulative = cumulative + category.value;
       const end = (nextCumulative / total) * 360;
-      const color = CATEGORY_COLORS[category.label] || "#f97316";
+      const color = CATEGORY_COLORS[category.label] || "#94A3B8";
 
       return {
         parts: [...parts, `${color} ${start}deg ${end}deg`],
@@ -161,32 +161,35 @@ function CategoryChart({ categories }) {
   ).parts;
 
   return (
-    <GlassCard className="p-6">
-      <h3 className="mb-6 text-base font-semibold text-white">
-        Category-wise Expenses
-      </h3>
+    <SurfaceCard className="p-6">
+      <div className="mb-6">
+        <h3 className="text-base font-semibold text-white">
+          Category Distribution
+        </h3>
+        <p className="text-xs text-slate-400 mt-0.5">Where your money goes</p>
+      </div>
 
       <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center">
         <div
-          className="relative flex h-40 w-40 shrink-0 items-center justify-center rounded-full shadow-lg"
+          className="relative flex h-36 w-36 shrink-0 items-center justify-center rounded-full"
           style={{ background: `conic-gradient(${stops.join(",")})` }}
         >
-          <div className="flex h-[70%] w-[70%] flex-col items-center justify-center rounded-full bg-[#0D1226]">
-            <span className="text-[11px] text-gray-500">Total</span>
-            <span className="text-lg font-bold text-white">
+          <div className="flex h-[72%] w-[72%] flex-col items-center justify-center rounded-full bg-[#0E1322]">
+            <span className="text-[10px] text-slate-400 uppercase tracking-wider">Total</span>
+            <span className="text-sm font-bold text-white">
               {formatINR(total)}
             </span>
           </div>
         </div>
 
-        <div className="grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2">
+        <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2">
           {categories.map((c) => (
-            <div key={c.label} className="flex items-center gap-2.5">
+            <div key={c.label} className="flex items-center gap-2">
               <span
-                className="h-2.5 w-2.5 shrink-0 rounded-full"
-                style={{ backgroundColor: CATEGORY_COLORS[c.label] || "#f97316" }}
+                className="h-2 w-2 shrink-0 rounded-full"
+                style={{ backgroundColor: CATEGORY_COLORS[c.label] || "#94A3B8" }}
               />
-              <span className="flex-1 truncate text-xs text-gray-300">
+              <span className="flex-1 truncate text-xs text-slate-300">
                 {c.label}
               </span>
               <span className="text-xs font-semibold text-white">
@@ -196,12 +199,12 @@ function CategoryChart({ categories }) {
           ))}
         </div>
       </div>
-    </GlassCard>
+    </SurfaceCard>
   );
 }
 
 /* =========================================================
-   RECENT TRANSACTIONS
+   RECENT EXPENSES
 ========================================================= */
 
 const CATEGORY_ICON = {
@@ -212,7 +215,6 @@ const CATEGORY_ICON = {
   Bills: Home,
   Entertainment: Film,
   Health: HeartPulse,
-  Income: TrendingUp,
 };
 
 function RecentTransactions({ transactions }) {
@@ -221,25 +223,25 @@ function RecentTransactions({ transactions }) {
   );
 
   return (
-    <GlassCard className="p-6">
+    <SurfaceCard className="p-6">
       <div className="mb-5 flex items-center justify-between">
         <div>
           <h3 className="text-base font-semibold text-white">
             Recent Expenses
           </h3>
-          <p className="text-xs text-gray-500">Latest outgoings</p>
+          <p className="text-xs text-slate-400">Latest outgoings</p>
         </div>
-        <span className="text-xs text-gray-400">
+        <span className="text-xs text-slate-400">
           {sorted.length} total
         </span>
       </div>
 
       {sorted.length === 0 ? (
-        <div className="py-8 text-center text-sm text-gray-500">
+        <div className="py-8 text-center text-sm text-slate-400">
           No expenses recorded yet. Click Add Expense to record a transaction.
         </div>
       ) : (
-        <div className="flex flex-col divide-y divide-white/[0.06] max-h-[380px] overflow-y-auto pr-1">
+        <div className="flex flex-col divide-y divide-slate-800/80 max-h-[380px] overflow-y-auto pr-1">
           {sorted.slice(0, 10).map((t) => {
             const Icon = CATEGORY_ICON[t.category] || MoreHorizontal;
             const displayAmount = Number(t.amount) || 0;
@@ -249,28 +251,24 @@ function RecentTransactions({ transactions }) {
                 key={t._id || Math.random()}
                 className="flex items-center gap-3 py-3 first:pt-0 last:pb-0"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/[0.06]">
-                  <Icon
-                    size={17}
-                    className="text-orange-400"
-                  />
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-800 border border-slate-700 text-slate-300">
+                  <Icon size={16} />
                 </div>
 
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-white">
                     {t.title}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-slate-400">
                     {t.category || "Expense"} ·{" "}
                     {new Date(t.date).toLocaleDateString("en-IN", {
                       day: "numeric",
                       month: "short",
-                      year: "numeric",
                     })}
                   </p>
                 </div>
 
-                <span className="shrink-0 text-sm font-semibold text-gray-200">
+                <span className="shrink-0 text-sm font-semibold text-slate-200">
                   -{formatINR(displayAmount)}
                 </span>
               </div>
@@ -278,12 +276,12 @@ function RecentTransactions({ transactions }) {
           })}
         </div>
       )}
-    </GlassCard>
+    </SurfaceCard>
   );
 }
 
 /* =========================================================
-   MONTHLY BUDGET (FIXED & ENHANCED)
+   MONTHLY BUDGET (Clean & Focused)
 ========================================================= */
 
 function MonthlyBudget({ budget, onEditBudget }) {
@@ -297,16 +295,16 @@ function MonthlyBudget({ budget, onEditBudget }) {
   const overAmount = hasLimit && over ? spent - limit : 0;
 
   return (
-    <GlassCard className="p-6 flex flex-col justify-between">
+    <SurfaceCard className="p-6 flex flex-col justify-between">
       <div>
         <div className="mb-4 flex items-center justify-between">
           <div>
             <h3 className="text-base font-semibold text-white">Monthly Budget</h3>
-            <p className="text-xs text-gray-500">Current Month</p>
+            <p className="text-xs text-slate-400">Current calendar month</p>
           </div>
           <button
             onClick={onEditBudget}
-            className="flex items-center gap-1 text-xs font-medium text-orange-400 hover:text-orange-300 transition bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/20 px-3 py-1.5 rounded-lg"
+            className="flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3 py-1.5 rounded-lg transition-colors"
           >
             <Edit2 size={12} />
             {hasLimit ? "Edit Budget" : "Set Budget"}
@@ -315,16 +313,16 @@ function MonthlyBudget({ budget, onEditBudget }) {
 
         {!hasLimit ? (
           <div className="py-6 text-center">
-            <div className="flex h-12 w-12 mx-auto items-center justify-center rounded-2xl bg-orange-500/10 border border-orange-500/20 text-orange-400 mb-3">
-              <PiggyBank size={24} />
+            <div className="flex h-11 w-11 mx-auto items-center justify-center rounded-xl bg-slate-800 border border-slate-700 text-slate-400 mb-3">
+              <PiggyBank size={20} />
             </div>
-            <p className="text-sm font-medium text-white">No Monthly Budget Set</p>
-            <p className="text-xs text-gray-400 mt-1 mb-4">
-              Set a monthly spending limit to track and avoid overspending.
+            <p className="text-sm font-medium text-white">No Monthly Limit Set</p>
+            <p className="text-xs text-slate-400 mt-1 mb-4">
+              Set a monthly spending limit to keep your budget on track.
             </p>
             <button
               onClick={onEditBudget}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-orange-500 hover:bg-orange-600 rounded-xl shadow-lg shadow-orange-500/20 transition"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-slate-950 bg-emerald-500 hover:bg-emerald-400 rounded-xl transition-colors shadow-sm"
             >
               <Plus size={14} />
               Set Monthly Limit
@@ -333,38 +331,35 @@ function MonthlyBudget({ budget, onEditBudget }) {
         ) : (
           <>
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-xs text-gray-400">Spending Progress</span>
+              <span className="text-xs text-slate-400">Spending Progress</span>
               <span
                 className={`text-xs font-semibold ${
-                  over ? "text-red-400" : "text-gray-300"
+                  over ? "text-rose-400" : "text-slate-300"
                 }`}
               >
                 {pct.toFixed(0)}% used
               </span>
             </div>
 
-            <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
+            <div className="h-2 w-full overflow-hidden rounded-full bg-slate-800">
               <div
-                className="h-full rounded-full transition-all duration-500"
-                style={{
-                  width: `${pct}%`,
-                  background: over
-                    ? "linear-gradient(90deg,#f87171,#ef4444)"
-                    : "linear-gradient(90deg,#fb923c,#f97316)",
-                }}
+                className={`h-full rounded-full transition-all duration-300 ${
+                  over ? "bg-rose-500" : "bg-emerald-500"
+                }`}
+                style={{ width: `${pct}%` }}
               />
             </div>
 
             <div className="mt-4 flex items-center justify-between text-sm">
-              <span className="text-gray-300">
+              <span className="text-slate-300">
                 {formatINR(spent)}{" "}
-                <span className="text-gray-500 text-xs">of {formatINR(limit)}</span>
+                <span className="text-slate-500 text-xs">of {formatINR(limit)}</span>
               </span>
               <span
-                className={`font-semibold text-xs px-2 py-0.5 rounded-full ${
+                className={`font-semibold text-xs px-2.5 py-1 rounded-md ${
                   over
-                    ? "bg-red-500/15 text-red-400 border border-red-500/20"
-                    : "bg-emerald-500/15 text-emerald-400 border border-emerald-500/20"
+                    ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+                    : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                 }`}
               >
                 {over ? `Over by ${formatINR(overAmount)}` : `${formatINR(remaining)} left`}
@@ -373,7 +368,7 @@ function MonthlyBudget({ budget, onEditBudget }) {
           </>
         )}
       </div>
-    </GlassCard>
+    </SurfaceCard>
   );
 }
 
@@ -429,25 +424,25 @@ function BudgetModal({ currentLimit, onClose, onSuccess }) {
   const quickAmounts = [10000, 25000, 50000, 100000];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-5">
-      <div className="w-full max-w-md rounded-[28px] border border-white/10 bg-[#101625]/95 p-7 shadow-[0_30px_100px_rgba(0,0,0,0.55)] backdrop-blur-2xl animate-in fade-in duration-200">
-        <div className="mb-6 flex items-center justify-between">
-          <h3 className="text-xl font-bold text-white">Set Monthly Budget</h3>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs px-5">
+      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-[#0E1322] p-6 shadow-2xl">
+        <div className="mb-5 flex items-center justify-between">
+          <h3 className="text-lg font-bold text-white">Set Monthly Budget</h3>
           <button
             onClick={onClose}
-            className="text-gray-500 transition hover:text-white"
+            className="text-slate-400 transition hover:text-white"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-300">
-              Monthly Spending Limit
+            <label className="mb-1.5 block text-xs font-medium text-slate-300">
+              Monthly Spending Target
             </label>
-            <div className="flex h-[52px] items-center rounded-xl border border-white/10 bg-white/[0.04] px-4 focus-within:border-orange-500/70 focus-within:ring-2 focus-within:ring-orange-500/10">
-              <span className="text-gray-500">₹</span>
+            <div className="flex h-11 items-center rounded-xl border border-slate-700 bg-slate-900/60 px-3.5 focus-within:border-emerald-500">
+              <span className="text-slate-400 text-sm">₹</span>
               <input
                 type="number"
                 required
@@ -455,20 +450,20 @@ function BudgetModal({ currentLimit, onClose, onSuccess }) {
                 placeholder="e.g. 30000"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="ml-2 w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-500"
+                className="ml-2 w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
               />
             </div>
           </div>
 
           <div>
-            <span className="text-xs text-gray-400 mb-2 block">Quick Select</span>
+            <span className="text-xs text-slate-400 mb-1.5 block">Quick Select</span>
             <div className="grid grid-cols-4 gap-2">
               {quickAmounts.map((q) => (
                 <button
                   key={q}
                   type="button"
                   onClick={() => setAmount(String(q))}
-                  className="rounded-lg border border-white/10 bg-white/[0.03] py-1.5 text-xs font-medium text-gray-300 hover:border-orange-500/40 hover:bg-orange-500/10 hover:text-orange-300 transition"
+                  className="rounded-lg border border-slate-700 bg-slate-800/40 py-1.5 text-xs font-medium text-slate-300 hover:border-slate-600 hover:bg-slate-800 transition"
                 >
                   ₹{(q / 1000).toFixed(0)}k
                 </button>
@@ -479,9 +474,9 @@ function BudgetModal({ currentLimit, onClose, onSuccess }) {
           <button
             type="submit"
             disabled={loading}
-            className="mt-2 flex h-[52px] w-full items-center justify-center rounded-xl bg-orange-500 font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600 disabled:opacity-50"
+            className="mt-2 flex h-11 w-full items-center justify-center rounded-xl bg-emerald-500 hover:bg-emerald-400 font-semibold text-slate-950 transition-colors disabled:opacity-50 text-sm"
           >
-            {loading ? "Saving Budget..." : "Save Monthly Budget"}
+            {loading ? "Saving..." : "Save Monthly Budget"}
           </button>
         </form>
       </div>
@@ -490,7 +485,7 @@ function BudgetModal({ currentLimit, onClose, onSuccess }) {
 }
 
 /* =========================================================
-   ADD TRANSACTION MODAL (shared for income / expense)
+   ADD TRANSACTION MODAL
 ========================================================= */
 
 function TransactionModal({ mode, onClose, onSuccess }) {
@@ -574,27 +569,27 @@ function TransactionModal({ mode, onClose, onSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-5">
-      <div className="w-full max-w-md rounded-[28px] border border-white/10 bg-[#101625]/95 p-7 shadow-[0_30px_100px_rgba(0,0,0,0.55)] backdrop-blur-2xl animate-in fade-in duration-200">
-        <div className="mb-6 flex items-center justify-between">
-          <h3 className="text-xl font-bold text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs px-5">
+      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-[#0E1322] p-6 shadow-2xl">
+        <div className="mb-5 flex items-center justify-between">
+          <h3 className="text-lg font-bold text-white">
             Add {isIncome ? "Income" : "Expense"}
           </h3>
           <button
             onClick={onClose}
-            className="text-gray-500 transition hover:text-white"
+            className="text-slate-400 transition hover:text-white"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-300">
+            <label className="mb-1.5 block text-xs font-medium text-slate-300">
               Amount
             </label>
-            <div className="flex h-[52px] items-center rounded-xl border border-white/10 bg-white/[0.04] px-4 focus-within:border-orange-500/70 focus-within:ring-2 focus-within:ring-orange-500/10">
-              <span className="text-gray-500">₹</span>
+            <div className="flex h-11 items-center rounded-xl border border-slate-700 bg-slate-900/60 px-3.5 focus-within:border-emerald-500">
+              <span className="text-slate-400 text-sm">₹</span>
               <input
                 type="number"
                 required
@@ -603,61 +598,61 @@ function TransactionModal({ mode, onClose, onSuccess }) {
                 placeholder="0.00"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="ml-2 w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-500"
+                className="ml-2 w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-300">
-              Title
+            <label className="mb-1.5 block text-xs font-medium text-slate-300">
+              Title / Description
             </label>
-            <div className="flex h-[52px] items-center rounded-xl border border-white/10 bg-white/[0.04] px-4 focus-within:border-orange-500/70 focus-within:ring-2 focus-within:ring-orange-500/10">
+            <div className="flex h-11 items-center rounded-xl border border-slate-700 bg-slate-900/60 px-3.5 focus-within:border-emerald-500">
               <input
                 type="text"
                 required
-                placeholder={isIncome ? "e.g. Salary, Freelance" : "e.g. Lunch, Groceries"}
+                placeholder={isIncome ? "e.g. Monthly Salary, Freelance" : "e.g. Grocery, Electricity Bill"}
                 value={label}
                 onChange={(e) => setLabel(e.target.value)}
-                className="w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-500"
+                className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
               />
             </div>
           </div>
 
           {!isIncome && (
             <div>
-              <label className="mb-2 block text-sm font-medium text-gray-300">
+              <label className="mb-1.5 block text-xs font-medium text-slate-300">
                 Category
               </label>
-              <div className="flex h-[52px] items-center rounded-xl border border-white/10 bg-white/[0.04] px-4">
+              <div className="flex h-11 items-center rounded-xl border border-slate-700 bg-slate-900/60 px-3.5">
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   className="w-full bg-transparent text-sm text-white outline-none cursor-pointer"
                 >
-                  <option value="Food" className="bg-[#101625] text-white">Food</option>
-                  <option value="Travel" className="bg-[#101625] text-white">Travel</option>
-                  <option value="Shopping" className="bg-[#101625] text-white">Shopping</option>
-                  <option value="Bills" className="bg-[#101625] text-white">Bills</option>
-                  <option value="Entertainment" className="bg-[#101625] text-white">Entertainment</option>
-                  <option value="Health" className="bg-[#101625] text-white">Health</option>
-                  <option value="Other" className="bg-[#101625] text-white">Other</option>
+                  <option value="Food" className="bg-[#0E1322] text-white">Food</option>
+                  <option value="Travel" className="bg-[#0E1322] text-white">Travel</option>
+                  <option value="Shopping" className="bg-[#0E1322] text-white">Shopping</option>
+                  <option value="Bills" className="bg-[#0E1322] text-white">Bills</option>
+                  <option value="Entertainment" className="bg-[#0E1322] text-white">Entertainment</option>
+                  <option value="Health" className="bg-[#0E1322] text-white">Health</option>
+                  <option value="Other" className="bg-[#0E1322] text-white">Other</option>
                 </select>
               </div>
             </div>
           )}
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-300">
+            <label className="mb-1.5 block text-xs font-medium text-slate-300">
               Note (optional)
             </label>
-            <div className="flex h-[52px] items-center rounded-xl border border-white/10 bg-white/[0.04] px-4 focus-within:border-orange-500/70 focus-within:ring-2 focus-within:ring-orange-500/10">
+            <div className="flex h-11 items-center rounded-xl border border-slate-700 bg-slate-900/60 px-3.5 focus-within:border-emerald-500">
               <input
                 type="text"
-                placeholder="Add notes or tags"
+                placeholder="Add optional notes"
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
-                className="w-full bg-transparent text-sm text-white outline-none placeholder:text-gray-500"
+                className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
               />
             </div>
           </div>
@@ -665,7 +660,7 @@ function TransactionModal({ mode, onClose, onSuccess }) {
           <button
             type="submit"
             disabled={loading}
-            className="mt-2 flex h-[52px] w-full items-center justify-center rounded-xl bg-orange-500 font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600 disabled:opacity-50"
+            className="mt-2 flex h-11 w-full items-center justify-center rounded-xl bg-emerald-500 hover:bg-emerald-400 font-semibold text-slate-950 transition-colors disabled:opacity-50 text-sm"
           >
             {loading
               ? "Saving..."
@@ -705,31 +700,31 @@ function ProfileMenu({ userName, userEmail }) {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 transition hover:bg-white/[0.07] hover:border-white/20"
+        className="flex items-center gap-2.5 rounded-xl border border-slate-800 bg-[#0E1322] px-3.5 py-2 transition hover:bg-slate-800/80 hover:border-slate-700"
       >
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-orange-500 to-amber-400 font-bold text-xs text-white shadow-md shadow-orange-500/20">
+        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20 font-bold text-xs text-emerald-400">
           {getInitials(userName)}
         </div>
-        <span className="hidden text-sm font-semibold text-gray-200 sm:block max-w-[140px] truncate">
+        <span className="hidden text-sm font-medium text-slate-200 sm:block max-w-[140px] truncate">
           {userName || "My Profile"}
         </span>
-        <ChevronDown size={15} className={`text-gray-400 transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDown size={14} className={`text-slate-400 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open && (
-        <div className="absolute right-0 top-[calc(100%+8px)] z-40 w-56 overflow-hidden rounded-2xl border border-white/10 bg-[#101625]/95 shadow-[0_20px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl animate-in fade-in duration-150">
-          <div className="px-4 py-3.5 border-b border-white/[0.08] bg-white/[0.02]">
-            <p className="text-[11px] font-medium text-gray-400 uppercase tracking-wider">Signed in as</p>
-            <p className="text-sm font-bold text-white truncate mt-0.5">{userName || "User"}</p>
+        <div className="absolute right-0 top-[calc(100%+8px)] z-40 w-56 overflow-hidden rounded-xl border border-slate-800 bg-[#0E1322] shadow-2xl">
+          <div className="px-4 py-3 border-b border-slate-800 bg-slate-900/30">
+            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Signed in as</p>
+            <p className="text-sm font-semibold text-white truncate mt-0.5">{userName || "User"}</p>
             {userEmail && (
-              <p className="text-xs text-gray-400 truncate mt-0.5">{userEmail}</p>
+              <p className="text-xs text-slate-400 truncate mt-0.5">{userEmail}</p>
             )}
           </div>
           <button
             onClick={handleLogout}
-            className="flex w-full items-center gap-2.5 px-4 py-3 text-sm font-medium text-red-400 transition hover:bg-red-500/10"
+            className="flex w-full items-center gap-2 px-4 py-2.5 text-xs font-medium text-rose-400 hover:bg-rose-500/10 transition-colors"
           >
-            <LogOut size={16} />
+            <LogOut size={14} />
             Logout
           </button>
         </div>
@@ -895,25 +890,20 @@ function Dashboard() {
   }));
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#070B18] via-[#0B1020] to-[#0D1226]">
-      {/* BACKGROUND GLOW */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -left-40 bottom-[-100px] h-[550px] w-[550px] rounded-full bg-purple-700/20 blur-[170px]" />
-        <div className="absolute -right-32 top-20 h-[450px] w-[450px] rounded-full bg-orange-500/10 blur-[160px]" />
-      </div>
-
-      <div className="relative z-10 mx-auto max-w-7xl px-5 py-8 sm:px-8 md:px-10">
+    <main className="min-h-screen bg-[#090C15] text-slate-100 antialiased selection:bg-emerald-500 selection:text-slate-950 pb-16">
+      <div className="mx-auto max-w-7xl px-5 py-7 sm:px-8 md:px-10">
+        
         {/* TOP BAR */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex items-center justify-between pb-5 border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <Link to="/" className="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-500 shadow-lg shadow-orange-500/25">
-              <span className="text-lg font-bold text-white">$</span>
+            <Link to="/">
+              <BrandLogo size="md" showText={false} />
             </Link>
             <div>
-              <h1 className="text-xl font-bold leading-none text-white">
-                Spend<span className="text-orange-500">Wise</span>
+              <h1 className="text-lg font-bold leading-none text-white">
+                Spend<span className="text-emerald-400">Wise</span>
               </h1>
-              <p className="mt-1 text-xs text-gray-400">
+              <p className="mt-1 text-xs text-slate-400">
                 Welcome back, {userName} 👋
               </p>
             </div>
@@ -922,31 +912,31 @@ function Dashboard() {
           <ProfileMenu userName={userName} userEmail={userEmail} />
         </div>
 
-        {/* SUMMARY CARDS */}
+        {/* SUMMARY METRIC CARDS */}
         <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
             label="Total Balance"
             value={totalBalance}
             icon={Wallet}
-            tint="#f97316"
+            tint="#10B981"
           />
           <StatCard
             label="Total Income"
             value={totalIncome}
             icon={TrendingUp}
-            tint="#34d399"
+            tint="#10B981"
           />
           <StatCard
             label="Total Expenses"
             value={totalExpenses}
-            icon={TrendingDown}
-            tint="#f87171"
+            icon={ArrowDownRight}
+            tint="#F43F5E"
           />
           <StatCard
-            label="Savings"
+            label="Net Savings"
             value={totalSavings}
             icon={PiggyBank}
-            tint="#a855f7"
+            tint="#38BDF8"
           />
         </div>
 
@@ -957,31 +947,31 @@ function Dashboard() {
         </div>
 
         {/* QUICK ACTIONS */}
-        <div className="mb-6 flex flex-wrap gap-3">
+        <div className="mb-6 flex flex-wrap gap-2.5">
           <button
             onClick={() => setModal("expense")}
-            className="flex h-11 items-center gap-2 rounded-xl bg-orange-500 px-5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600"
+            className="flex h-10 items-center gap-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 px-4 text-xs sm:text-sm font-semibold text-slate-950 transition-colors shadow-sm"
           >
-            <Minus size={16} />
+            <Minus size={15} />
             Add Expense
           </button>
           <button
             onClick={() => setModal("income")}
-            className="flex h-11 items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-5 text-sm font-semibold text-gray-200 transition hover:bg-white/[0.08]"
+            className="flex h-10 items-center gap-1.5 rounded-xl border border-slate-800 bg-[#0E1322] hover:bg-slate-800 px-4 text-xs sm:text-sm font-medium text-slate-200 transition-colors"
           >
-            <Plus size={16} />
+            <Plus size={15} />
             Add Income
           </button>
           <button
             onClick={() => setBudgetModalOpen(true)}
-            className="flex h-11 items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-5 text-sm font-semibold text-gray-200 transition hover:bg-white/[0.08]"
+            className="flex h-10 items-center gap-1.5 rounded-xl border border-slate-800 bg-[#0E1322] hover:bg-slate-800 px-4 text-xs sm:text-sm font-medium text-slate-200 transition-colors"
           >
-            <Edit2 size={15} />
+            <Edit2 size={13} />
             {budget?.monthlyLimit ? "Update Budget" : "Set Monthly Budget"}
           </button>
         </div>
 
-        {/* TRANSACTIONS + BUDGET */}
+        {/* RECENT EXPENSES + MONTHLY BUDGET */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <RecentTransactions transactions={expenses} />

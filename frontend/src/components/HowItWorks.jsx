@@ -1,101 +1,85 @@
-import { UserPlus, PlusCircle, LineChart, ArrowRight, CheckCircle } from "lucide-react";
+import { UserPlus, PlusCircle, LineChart, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const steps = [
   {
     step: "01",
     icon: UserPlus,
-    title: "Create Account in 30s",
-    desc: "Start with zero friction. Create your secure SpendWise account, set your primary currency, and customize your financial goals.",
-    badge: "Fast Onboarding",
-    accent: "from-orange-500 to-amber-500",
+    title: "Create your free account",
+    desc: "Takes under 30 seconds. No credit card or sensitive bank credentials needed.",
   },
   {
     step: "02",
     icon: PlusCircle,
-    title: "Log Cash Inflows & Outflows",
-    desc: "Record expenses and income streams with one click. Categorize expenditures into Food, Travel, Bills, Shopping, or custom tags.",
-    badge: "Smart Logging",
-    accent: "from-emerald-500 to-teal-400",
+    title: "Log transactions as you go",
+    desc: "Record daily outgoings and monthly earnings in 3 seconds with smart category tags.",
   },
   {
     step: "03",
     icon: LineChart,
-    title: "Unlock Growth Insights",
-    desc: "Visualize your net savings rate, monitor dynamic category budgets, and optimize your monthly cash flow with automated reports.",
-    badge: "Wealth Growth",
-    accent: "from-purple-500 to-indigo-400",
+    title: "See trends & stay on budget",
+    desc: "Review your category donut breakdown and keep spending within your monthly target.",
   },
 ];
 
 function HowItWorks() {
   return (
-    <section id="how-it-works" className="relative py-28 scroll-mt-20">
-      {/* Background glow */}
-      <div className="pointer-events-none absolute right-10 top-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-orange-500/10 blur-[180px]" />
-
-      <div className="relative mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 xl:px-20">
+    <section id="how-it-works" className="relative py-24 border-t border-slate-800/80 scroll-mt-14">
+      <div className="relative mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-4">
-            <CheckCircle size={13} />
-            Frictionless Roadmap
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-            How SpendWise{" "}
-            <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
-              Transforms Your Habits
-            </span>
+        <div className="max-w-2xl mx-auto text-center mb-16">
+          <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
+            How It Works
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mt-2">
+            Up and running in three simple steps
           </h2>
-          <p className="mt-5 text-base sm:text-lg text-gray-300 leading-relaxed">
-            From setup to automated intelligence, experience how simple true financial mastery can be.
+          <p className="mt-4 text-base text-slate-300">
+            No steep learning curve. Start gaining financial clarity right away.
           </p>
         </div>
 
         {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {steps.map((item) => {
             const Icon = item.icon;
             return (
               <div
                 key={item.step}
-                className="group relative rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-8 sm:p-10 backdrop-blur-2xl transition-all duration-300 hover:border-white/25 hover:bg-white/[0.06] hover:shadow-[0_25px_60px_rgba(0,0,0,0.6)] hover:-translate-y-1"
+                className="rounded-2xl border border-slate-800 bg-[#0E1322] p-7 flex flex-col justify-between"
               >
-                {/* Step Pill */}
-                <div className="flex items-center justify-between mb-8">
-                  <span className={`text-4xl font-black bg-gradient-to-r ${item.accent} bg-clip-text text-transparent`}>
-                    {item.step}
-                  </span>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-white shadow-lg group-hover:scale-110 transition-transform">
-                    <Icon size={22} className="text-orange-400" />
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="font-mono text-sm font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
+                      STEP {item.step}
+                    </span>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-800 border border-slate-700 text-slate-300">
+                      <Icon size={18} />
+                    </div>
                   </div>
+
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-sm text-slate-400 leading-relaxed">
+                    {item.desc}
+                  </p>
                 </div>
-
-                <span className="text-xs font-semibold uppercase tracking-wider text-gray-400 bg-white/[0.05] border border-white/10 px-3 py-1 rounded-full mb-4 inline-block">
-                  {item.badge}
-                </span>
-
-                <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">
-                  {item.title}
-                </h3>
-
-                <p className="text-sm sm:text-base leading-relaxed text-gray-300">
-                  {item.desc}
-                </p>
               </div>
             );
           })}
         </div>
 
         {/* Bottom CTA trigger */}
-        <div className="mt-16 text-center">
+        <div className="mt-14 text-center">
           <Link
             to="/register"
-            className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-orange-500 via-orange-500 to-amber-500 px-8 py-4 text-base font-bold text-white shadow-[0_0_30px_rgba(249,115,22,0.35)] transition-all duration-300 hover:shadow-[0_0_45px_rgba(249,115,22,0.55)] hover:scale-[1.03]"
+            className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-950 transition-colors shadow-sm"
           >
-            <span>Start Your 30-Second Setup</span>
-            <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+            <span>Get Started Now</span>
+            <ArrowRight size={16} />
           </Link>
         </div>
 

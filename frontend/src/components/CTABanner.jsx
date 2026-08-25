@@ -1,71 +1,58 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle2, Sparkles, Shield, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 function CTABanner() {
   const perks = [
+    "100% Free forever",
     "No credit card required",
-    "Instant 30-second setup",
-    "Encrypted cloud backup",
-    "Free forever tier",
+    "Setup in 30 seconds",
+    "Encrypted data storage",
   ];
 
   return (
-    <section className="relative py-24">
-      <div className="relative mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 xl:px-20">
+    <section className="relative py-20 border-t border-slate-800/80">
+      <div className="relative mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         
-        {/* Main Glowing Container */}
-        <div className="relative overflow-hidden rounded-[36px] border border-white/15 bg-gradient-to-br from-orange-600/25 via-[#0D122D] to-purple-900/30 p-10 sm:p-14 lg:p-20 backdrop-blur-2xl shadow-[0_35px_100px_rgba(0,0,0,0.7)] text-center">
-          
-          {/* Ambient Lighting Orbs */}
-          <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-orange-500/25 blur-[120px]" />
-          <div className="pointer-events-none absolute -left-24 -bottom-24 h-96 w-96 rounded-full bg-purple-600/25 blur-[120px]" />
+        <div className="relative rounded-2xl border border-slate-800 bg-[#0E1322] p-10 sm:p-14 text-center">
+          <div className="max-w-2xl mx-auto">
+            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
+              Get Started Today
+            </span>
 
-          <div className="relative z-10 max-w-3xl mx-auto">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-orange-400/30 bg-orange-500/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-orange-300 mb-6 shadow-inner">
-              <Sparkles size={13} />
-              Unlock Your Financial Freedom
-            </div>
-
-            {/* Headline */}
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-              Ready to Take Absolute Control of Your Money?
+            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mt-2">
+              Ready to take control of your spending?
             </h2>
 
-            {/* Subtitle */}
-            <p className="mt-6 text-base sm:text-lg leading-relaxed text-gray-200">
-              Join over 25,000+ smart budgeters who use SpendWise every day to eliminate financial stress and grow their wealth.
+            <p className="mt-4 text-base text-slate-300">
+              Join thousands of smart budgeters using SpendWise to build better financial habits.
             </p>
 
-            {/* Action Buttons */}
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
               <Link
                 to="/register"
-                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-orange-500 via-orange-500 to-amber-500 px-9 py-4 text-base font-bold text-white shadow-[0_0_35px_rgba(249,115,22,0.45)] transition-all duration-300 hover:shadow-[0_0_55px_rgba(249,115,22,0.65)] hover:scale-[1.03]"
+                className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 px-6 py-3.5 text-sm font-semibold text-slate-950 transition-colors shadow-sm"
               >
                 <span>Create Free Account</span>
-                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                <ArrowRight size={16} />
               </Link>
 
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/[0.06] px-8 py-4 text-base font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:bg-white/10 hover:border-white/30"
+                className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800/40 hover:bg-slate-800 hover:border-slate-600 px-6 py-3.5 text-sm font-medium text-slate-200 transition-colors"
               >
-                Sign In to Account
+                Sign In
               </Link>
             </div>
 
-            {/* Checkmark Perks */}
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs sm:text-sm text-gray-300 pt-8 border-t border-white/10">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-400 pt-6 border-t border-slate-800">
               {perks.map((perk) => (
-                <div key={perk} className="flex items-center gap-2 font-medium">
-                  <CheckCircle2 size={16} className="text-orange-400 shrink-0" />
+                <div key={perk} className="flex items-center gap-1.5 font-medium">
+                  <CheckCircle2 size={14} className="text-emerald-400" />
                   <span>{perk}</span>
                 </div>
               ))}
             </div>
           </div>
-
         </div>
 
       </div>

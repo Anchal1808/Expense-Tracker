@@ -1,240 +1,199 @@
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
-  Play,
-  DollarSign,
-  Wallet,
-  CreditCard,
-  ArrowDownLeft,
-  ShoppingCart,
   TrendingUp,
-  Sparkles,
+  Wallet,
+  ArrowDownRight,
   ShieldCheck,
-  Zap,
+  CheckCircle2,
+  PieChart,
 } from "lucide-react";
 
 function Hero() {
   const chartData = [
-    { month: "Jan", income: 55, expense: 78 },
-    { month: "Feb", income: 68, expense: 92 },
-    { month: "Mar", income: 62, expense: 70 },
-    { month: "Apr", income: 74, expense: 88 },
-    { month: "May", income: 60, expense: 82 },
-    { month: "Jun", income: 70, expense: 65 },
+    { month: "Jan", amount: 28400, height: 60 },
+    { month: "Feb", amount: 34200, height: 75 },
+    { month: "Mar", amount: 29800, height: 65 },
+    { month: "Apr", amount: 41500, height: 90 },
+    { month: "May", amount: 31200, height: 68 },
+    { month: "Jun", amount: 26800, height: 58 },
+  ];
+
+  const recentItems = [
+    { title: "Grocery & Mart", cat: "Food", amount: "₹2,450", date: "Today" },
+    { title: "Internet & Utilities", cat: "Bills", amount: "₹1,899", date: "Yesterday" },
+    { title: "Fuel Station", cat: "Travel", amount: "₹1,200", date: "24 Aug" },
   ];
 
   return (
-    <section className="relative overflow-hidden pt-8 pb-20 lg:pt-14 lg:pb-32">
-      {/* Multi-layered Ambient Spotlights */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-[600px] w-[900px] rounded-full bg-gradient-to-b from-orange-500/15 via-purple-600/10 to-transparent blur-[160px]" />
-      <div className="pointer-events-none absolute -left-40 top-1/3 h-[500px] w-[500px] rounded-full bg-purple-700/15 blur-[170px]" />
-      <div className="pointer-events-none absolute -right-40 top-1/4 h-[500px] w-[500px] rounded-full bg-orange-500/10 blur-[170px]" />
+    <section className="relative pt-12 pb-24 lg:pt-20 lg:pb-32">
+      <div className="relative mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+        
+        {/* Top Header & Copy */}
+        <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
+          {/* <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800/60 px-3.5 py-1 text-xs font-medium text-slate-300 mb-6">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            Simple, honest personal finance
+          </div> */}
 
-      {/* Main Container with generous side margins */}
-      <div className="relative mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 xl:px-20">
-        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-10 xl:gap-14">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.15]">
+            Track every daily expenses. <br />
+            <span className="text-emerald-400">Budget with clarity.</span>
+          </h1>
+
+          <p className="mt-6 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
+            A fast, distraction-free expense tracker built for individuals who want complete control over their money. No ads, no complex setup, just clean numbers.
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
+            <Link
+              to="/register"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 px-6 py-3.5 text-sm font-semibold text-slate-950 transition-all duration-150 shadow-sm"
+            >
+              <span>Start Tracking Free</span>
+              <ArrowRight size={16} />
+            </Link>
+
+            <Link
+              to="/dashboard"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800/40 hover:bg-slate-800 hover:border-slate-600 px-6 py-3.5 text-sm font-medium text-slate-200 transition-colors"
+            >
+              <span>Explore Live Dashboard</span>
+            </Link>
+          </div>
+
+          <div className="mt-8 flex items-center justify-center gap-6 text-xs text-slate-400">
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 size={14} className="text-emerald-400" /> No credit card required
+            </span>
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck size={14} className="text-emerald-400" /> Encrypted database
+            </span>
+          </div>
+        </div>
+
+        {/* Real Product UI Mockup (Authentic Fintech Dashboard Layout) */}
+        <div className="relative mx-auto max-w-5xl rounded-2xl border border-slate-800 bg-[#0D111D] p-5 sm:p-7 shadow-2xl shadow-black/80">
           
-          {/* ================= LEFT COLUMN: COPY & CONVERSION ================= */}
-          <div className="relative z-10 lg:col-span-6 xl:col-span-6 text-center lg:text-left">
-            {/* Announcement Badge */}
-            {/* <div className="inline-flex items-center gap-2.5 rounded-full border border-orange-500/25 bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-transparent px-4 py-1.5 backdrop-blur-xl shadow-[0_0_20px_rgba(249,115,22,0.15)] mb-6">
-              <Sparkles size={14} className="text-orange-400 animate-pulse" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-orange-300">
-                SpendWise 2.0 • Intelligent Cash Flow
-              </span>
-            </div> */}
+          {/* Top Window Bar */}
+          <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-800/80">
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-slate-700" />
+              <div className="h-3 w-3 rounded-full bg-slate-700" />
+              <div className="h-3 w-3 rounded-full bg-slate-700" />
+              <span className="ml-2 text-xs font-mono text-slate-400">app.spendwise.in/dashboard</span>
+            </div>
+            <span className="text-xs font-medium text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
+              Live Sync Active
+            </span>
+          </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1]">
-              Track Your Expenses with{" "}
-              <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500 bg-clip-text text-transparent">
-                SpendWise
-              </span>{" "}
-              {/* Precision. */}
-            </h1>
-
-            {/* Value Proposition Subtitle */}
-            <p className="mt-6 text-base sm:text-lg leading-relaxed text-gray-300 max-w-xl mx-auto lg:mx-0">
-             Stay in control of your spending, make smarter financial choices, and turn everyday expenses into better savings.
-            </p>
-
-            {/* Action CTAs */}
-            <div className="mt-9 flex flex-wrap items-center justify-center lg:justify-start gap-4">
-              <Link
-                to="/register"
-                className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-gradient-to-r from-orange-500 via-orange-500 to-amber-500 px-8 py-4 text-sm sm:text-base font-bold text-white shadow-[0_0_35px_rgba(249,115,22,0.4)] transition-all duration-300 hover:shadow-[0_0_50px_rgba(249,115,22,0.6)] hover:scale-[1.03]"
-              >
-                <span>Start Free Today</span>
-                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-              </Link>
-
-              <Link
-                to="/dashboard"
-                className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-7 py-4 text-sm sm:text-base font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:bg-white/10 hover:border-white/25 hover:shadow-lg hover:shadow-black/30"
-              >
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-500/20 text-orange-400">
-                  <Play size={11} fill="currentColor" />
-                </div>
-                <span>Live Dashboard Demo</span>
-              </Link>
+          {/* Metrics Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
+              <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
+                <span>Total Balance</span>
+                <Wallet size={16} className="text-emerald-400" />
+              </div>
+              <p className="text-2xl font-bold text-white tracking-tight">₹48,520</p>
+              <p className="text-[11px] text-emerald-400 mt-1">+₹14,200 this month</p>
             </div>
 
-            {/* Trust Badges */}
-            <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-6 border-t border-white/10 pt-7 text-xs text-gray-400">
-              <div className="flex items-center gap-2">
-                <ShieldCheck size={16} className="text-emerald-400" />
-                <span>256-Bit SSL Encrypted</span>
+            <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
+              <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
+                <span>August Expenses</span>
+                <ArrowDownRight size={16} className="text-rose-400" />
               </div>
-              <div className="flex items-center gap-2">
-                <Zap size={16} className="text-orange-400" />
-                <span>Instant Setup (No Card Required)</span>
+              <p className="text-2xl font-bold text-white tracking-tight">₹26,800</p>
+              <p className="text-[11px] text-slate-400 mt-1">₹13,200 remaining in budget</p>
+            </div>
+
+            <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
+              <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
+                <span>Savings Rate</span>
+                <TrendingUp size={16} className="text-emerald-400" />
               </div>
-              <div className="flex items-center gap-1.5 text-amber-400 font-bold">
-                <span>★★★★★</span>
-                <span className="text-white ml-1">4.9/5 Rating</span>
-              </div>
+              <p className="text-2xl font-bold text-white tracking-tight">38.4%</p>
+              <p className="text-[11px] text-slate-400 mt-1">Target: 35.0%</p>
             </div>
           </div>
 
-          {/* ================= RIGHT COLUMN: LUXURY 3D DASHBOARD PREVIEW ================= */}
-          <div className="relative z-10 lg:col-span-6 xl:col-span-6">
-            <div className="relative mx-auto max-w-lg lg:max-w-none">
-              
-              {/* Decorative Background Glow for Card Deck */}
-              <div className="absolute -inset-1 rounded-[36px] bg-gradient-to-r from-orange-500/20 via-purple-500/20 to-blue-500/20 opacity-70 blur-2xl" />
-
-              {/* Main Bento Container */}
-              <div className="relative rounded-[32px] border border-white/15 bg-[#0A0E24]/85 p-6 sm:p-7 backdrop-blur-2xl shadow-[0_30px_100px_rgba(0,0,0,0.8)]">
-                
-                {/* Header of Preview Box */}
-                <div className="flex items-center justify-between pb-5 border-b border-white/10 mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-3 w-3 rounded-full bg-red-500/80" />
-                    <div className="flex h-3 w-3 rounded-full bg-yellow-500/80" />
-                    <div className="flex h-3 w-3 rounded-full bg-green-500/80" />
-                    <span className="ml-2 text-xs font-mono text-gray-400">spendwise.app/dashboard</span>
-                  </div>
-                  <span className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
-                    Live Syncing
-                  </span>
+          {/* Chart + Recent Expenses Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            
+            {/* 6-Month Expense Velocity Bar Chart */}
+            <div className="lg:col-span-7 rounded-xl border border-slate-800 bg-slate-900/40 p-5 flex flex-col justify-between">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
+                    Monthly Expense Velocity
+                  </h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Last 6 Months</p>
                 </div>
+                <span className="text-xs font-medium text-slate-300">Avg: ₹32,000/mo</span>
+              </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  
-                  {/* Total Income Card */}
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5 backdrop-blur-md transition-all hover:border-emerald-500/30 hover:bg-white/[0.05]">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400">
-                        <Wallet size={18} />
-                      </div>
-                      <span className="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
-                        +28.4%
-                      </span>
-                    </div>
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400">
-                      Total Income
-                    </p>
-                    <h3 className="mt-1 text-2xl font-black text-white tracking-tight">
-                      ₹62,000
-                    </h3>
+              <div className="flex items-end justify-between gap-3 h-36 pt-4 border-b border-slate-800 pb-2">
+                {chartData.map((d, i) => (
+                  <div key={d.month} className="flex flex-1 flex-col items-center gap-2 h-full justify-end">
+                    <div
+                      className={`w-full max-w-[28px] rounded-t-md transition-all ${
+                        i === chartData.length - 1
+                          ? "bg-emerald-500 shadow-sm"
+                          : "bg-slate-700/60 hover:bg-slate-700"
+                      }`}
+                      style={{ height: `${d.height}%` }}
+                    />
+                    <span className={`text-[10px] ${i === chartData.length - 1 ? "text-emerald-400 font-semibold" : "text-slate-400"}`}>
+                      {d.month}
+                    </span>
                   </div>
+                ))}
+              </div>
 
-                  {/* Total Expense Card */}
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5 backdrop-blur-md transition-all hover:border-orange-500/30 hover:bg-white/[0.05]">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500/15 text-orange-400">
-                        <DollarSign size={18} />
-                      </div>
-                      <span className="text-[11px] font-bold text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded-full">
-                        -12.8%
-                      </span>
+              <div className="flex items-center justify-between text-[11px] text-slate-400 pt-3">
+                <span>Lowest: ₹26.8k (Jun)</span>
+                <span>Peak: ₹41.5k (Apr)</span>
+              </div>
+            </div>
+
+            {/* Recent Expenses List */}
+            <div className="lg:col-span-5 rounded-xl border border-slate-800 bg-slate-900/40 p-5 flex flex-col justify-between">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
+                  Recent Outgoings
+                </h4>
+                <span className="text-[11px] text-slate-400">August</span>
+              </div>
+
+              <div className="flex flex-col divide-y divide-slate-800/80">
+                {recentItems.map((item) => (
+                  <div key={item.title} className="py-2.5 flex items-center justify-between first:pt-0 last:pb-0">
+                    <div>
+                      <p className="text-xs font-medium text-slate-200">{item.title}</p>
+                      <span className="text-[10px] text-slate-400">{item.cat} · {item.date}</span>
                     </div>
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400">
-                      Total Expenses
-                    </p>
-                    <h3 className="mt-1 text-2xl font-black text-white tracking-tight">
-                      ₹31,480
-                    </h3>
+                    <span className="text-xs font-semibold text-slate-200">{item.amount}</span>
                   </div>
+                ))}
+              </div>
 
-                  {/* Holographic Obsidian SpendWise Black Card */}
-                  <div className="sm:col-span-2 relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-tr from-[#12152b] via-[#1b2144] to-[#111738] p-5 shadow-2xl">
-                    <div className="pointer-events-none absolute -right-10 -bottom-10 h-36 w-36 rounded-full bg-orange-500/20 blur-3xl" />
-                    <div className="pointer-events-none absolute -left-10 -top-10 h-36 w-36 rounded-full bg-purple-500/20 blur-3xl" />
-
-                    <div className="flex items-center justify-between text-xs text-gray-400">
-                      <div className="flex items-center gap-2">
-                        <div className="h-6 w-8 rounded-md bg-gradient-to-br from-amber-300 via-amber-400 to-amber-600 shadow-inner flex items-center justify-center">
-                          <div className="h-3 w-5 border border-amber-900/40 rounded-sm" />
-                        </div>
-                        <span className="font-bold tracking-widest text-white text-xs">SPENDWISE BLACK</span>
-                      </div>
-                      <CreditCard size={18} className="text-orange-400" />
-                    </div>
-
-                    <p className="mt-5 font-mono text-base tracking-[4px] text-gray-200 font-semibold">
-                      •••• •••• •••• 9104
-                    </p>
-
-                    <div className="mt-4 flex items-center justify-between text-[11px] text-gray-400 pt-3 border-t border-white/10">
-                      <div>
-                        <span className="text-[9px] block uppercase text-gray-500 font-bold">Cardholder</span>
-                        <span className="font-semibold text-white tracking-wide">Anchal Sharma</span>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-[9px] block uppercase text-gray-500 font-bold">Valid Thru</span>
-                        <span className="font-semibold text-white tracking-wide">08/30</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Cash Flow Mini Chart */}
-                  <div className="sm:col-span-2 rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-md">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <TrendingUp size={15} className="text-orange-400" />
-                        <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-                          Monthly Cash Flow Trend
-                        </h4>
-                      </div>
-                      <span className="text-[10px] text-gray-400">Last 6 Months</span>
-                    </div>
-
-                    <div className="flex items-end justify-between gap-3 h-24 pt-2 border-b border-white/10 pb-2">
-                      {chartData.map((item) => (
-                        <div key={item.month} className="flex flex-1 flex-col items-center gap-1.5 h-full justify-end">
-                          <div className="flex items-end gap-1.5 w-full justify-center">
-                            <div
-                              className="w-2.5 rounded-t-sm bg-gradient-to-t from-emerald-500 to-teal-300 shadow-[0_0_10px_rgba(16,185,129,0.3)]"
-                              style={{ height: `${item.income}%` }}
-                            />
-                            <div
-                              className="w-2.5 rounded-t-sm bg-gradient-to-t from-orange-500 to-amber-400 shadow-[0_0_10px_rgba(249,115,22,0.3)]"
-                              style={{ height: `${item.expense}%` }}
-                            />
-                          </div>
-                          <span className="text-[10px] font-medium text-gray-400">{item.month}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-2.5 flex items-center justify-center gap-5 text-[10px] font-medium text-gray-400">
-                      <span className="flex items-center gap-1.5">
-                        <span className="h-2 w-2 rounded-full bg-emerald-400" /> Income
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <span className="h-2 w-2 rounded-full bg-orange-500" /> Expenses
-                      </span>
-                    </div>
-                  </div>
-
+              {/* Mini Budget Pill */}
+              <div className="mt-4 pt-3 border-t border-slate-800">
+                <div className="flex items-center justify-between text-[11px] mb-1.5">
+                  <span className="text-slate-400">Monthly Budget (₹40,000)</span>
+                  <span className="font-semibold text-emerald-400">67% used</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+                  <div className="h-full bg-emerald-500 rounded-full" style={{ width: "67%" }} />
                 </div>
               </div>
             </div>
+
           </div>
 
         </div>
+
       </div>
     </section>
   );

@@ -1,15 +1,30 @@
-
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Eye,
-  EyeOff,
-  Mail,
-  Lock,
-  ArrowRight,
-  X,
-} from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowRight, X } from "lucide-react";
+import BrandLogo from "../components/BrandLogo";
+
+function GoogleIcon() {
+  return (
+    <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24">
+      <path
+        fill="#4285F4"
+        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+      />
+    </svg>
+  );
+}
 
 function Login() {
   const navigate = useNavigate();
@@ -19,56 +34,18 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  //   if (!email || !password) {
-  //     alert("Please enter email and password.");
-  //     return;
-  //   }
+    if (!email || !password) {
+      alert("Please enter email and password.");
+      return;
+    }
 
-  //   try {
-  //     setLoading(true);
+    try {
+      setLoading(true);
 
-  //     // MongoDB backend API yahan connect hoga
-  //     // const response = await fetch(
-  //     //   "http://localhost:5000/api/auth/login",
-  //     //   {
-  //     //     method: "POST",
-  //     //     headers: {
-  //     //       "Content-Type": "application/json",
-  //     //     },
-  //     //     body: JSON.stringify({ email, password }),
-  //     //   }
-  //     // );
-
-  //     console.log("Login:", { email, password });
-
-  //     // Temporary navigation
-  //     navigate("/dashboard");
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("Login failed. Please try again.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if (!email || !password) {
-    alert("Please enter email and password.");
-    return;
-  }
-
-  try {
-    setLoading(true);
-
-    const response = await fetch(
-      "http://localhost:5000/api/auth/login",
-      {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,415 +54,166 @@ const handleSubmit = async (e) => {
           email,
           password,
         }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Login failed.");
+        return;
       }
-    );
 
-    const data = await response.json();
+      // Save JWT token
+      localStorage.setItem("token", data.token);
 
-    if (!response.ok) {
-      alert(data.message || "Login failed.");
-      return;
+      // Save user information
+      const userProfile = data.user || {
+        _id: data._id,
+        name: data.name,
+        email: data.email,
+      };
+      localStorage.setItem("user", JSON.stringify(userProfile));
+
+      navigate("/dashboard");
+    } catch (error) {
+      console.error(error);
+      alert("Login failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // Save JWT token
-    localStorage.setItem("token", data.token);
-
-    // Save user information
-    const userProfile = data.user || {
-      _id: data._id,
-      name: data.name,
-      email: data.email,
-    };
-    localStorage.setItem("user", JSON.stringify(userProfile));
-
-    alert("Login successful!");
-
-    navigate("/dashboard");
-
-  } catch (error) {
-    console.error(error);
-    alert("Login failed. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
-
-
+  const handleGoogleLogin = () => {
+    alert("Google authentication setup is in progress. Please sign in using email & password.");
+  };
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#070B18] via-[#0B1020] to-[#0D1226]">
+    <main className="min-h-screen bg-[#090C15] text-slate-100 antialiased flex flex-col justify-between selection:bg-emerald-500 selection:text-slate-950">
+      
+      {/* Top Header */}
+      <div className="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+        <Link to="/">
+          <BrandLogo size="md" />
+        </Link>
 
-      {/* =========================
-          BACKGROUND GLOW
-      ========================== */}
-
-      <div className="absolute inset-0">
-
-        {/* Purple glow */}
-        <div className="absolute -left-40 bottom-[-100px] h-[550px] w-[550px] rounded-full bg-purple-700/25 blur-[170px]" />
-
-        {/* Orange glow */}
-        <div className="absolute -right-32 top-20 h-[450px] w-[450px] rounded-full bg-orange-500/15 blur-[160px]" />
-
-        {/* Center glow */}
-        <div className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-500/10 blur-[150px]" />
-
+        <Link
+          to="/"
+          className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-white transition-colors"
+        >
+          <X size={15} />
+          Back to Home
+        </Link>
       </div>
 
-      {/* =========================
-          DARK OVERLAY
-      ========================== */}
+      {/* Main Form Center */}
+      <div className="flex-1 flex items-center justify-center px-5 py-8">
+        <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-[#0E1322] p-7 sm:p-9 shadow-xl shadow-black/40">
+          
+          <div className="mb-6 text-center">
+            <h1 className="text-2xl font-bold text-white tracking-tight">
+              Welcome back
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1">
+              Sign in to manage your budget and track expenses
+            </p>
+          </div>
 
-      <div className="absolute inset-0 bg-[#050817]/35 backdrop-blur-[3px]" />
-
-      {/* =========================
-          TOP BRAND
-      ========================== */}
-
-     
-
-      {/* =========================
-          CLOSE BUTTON
-      ========================== */}
-
-      <Link
-        to="/"
-        className="absolute right-6 top-7 z-30 flex items-center gap-2 text-sm font-medium text-gray-300 transition hover:text-orange-400 sm:right-10 md:right-14"
-      >
-        <X size={19} />
-        Close
-      </Link>
-
-      {/* =========================
-          MAIN CONTAINER
-      ========================== */}
-
-      <div
-        className="
-          relative
-          z-20
-          flex
-          min-h-screen
-          items-center
-          justify-center
-          px-5
-          py-24
-          sm:px-8
-          md:px-12
-          lg:px-20
-        "
-      >
-
-        {/* =========================
-            LOGIN CARD
-        ========================== */}
-
-        <div
-          className="
-            w-full
-            max-w-[540px]
-            min-h-[580px]
-            rounded-[32px]
-            border
-            border-white/10
-            bg-[#101625]/95
-            px-8
-            py-10
-            shadow-[0_30px_100px_rgba(0,0,0,0.55)]
-            backdrop-blur-2xl
-             !p-12
-            flex
-            flex-col
-          "
-        >
-
-  {/* =========================
-    HEADER
-========================== */}
-
-<div className="mb-10 text-center">
-
-  {/* LOGO + APP NAME */}
-  <div className="mb-7 flex items-center justify-center gap-2">
-
-    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500 shadow-lg shadow-orange-500/25">
-      <span className="text-base font-bold text-white">
-        $
-      </span>
-    </div>
-
-    <h1 className="text-[28px] font-bold leading-none text-white">
-      Spend<span className="text-orange-500">Wise</span>
-    </h1>
-
-  </div>
-{/* 
-  WELCOME
-  <h2 className="text-3xl font-bold text-white sm:text-4xl">
-    Welcome Back 👋
-  </h2> */}
-
-  <p className="mt-2 text-sm text-gray-400">
-    Login to continue to SpendWise
-  </p>
-
-</div>
-
-          {/* =========================
-              FORM
-          ========================== */}
-
-          <form
-            onSubmit={handleSubmit}
-            // className="space-y-8"
-            //  className="flex flex-1 flex-col justify-between"
-             className="flex flex-1 flex-col gap-5"
-          >
-
-            {/* EMAIL */}
-
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            
+            {/* Email Field */}
             <div>
-
-              <label className="mb-2 block text-sm font-medium text-gray-300">
+              <label className="mb-1.5 block text-xs font-medium text-slate-300">
                 Email Address
               </label>
-
-              <div
-                className="
-                  flex
-                  h-[58px]
-                  items-center
-                  rounded-xl
-                  border
-                  border-white/10
-                  bg-white/[0.04]
-                  px-4
-                  transition
-                  focus-within:border-orange-500/70
-                  focus-within:bg-white/[0.06]
-                  focus-within:ring-2
-                  focus-within:ring-orange-500/10
-                "
-              >
-
-                <Mail
-                  size={19}
-                  className="shrink-0 text-gray-500"
-                />
-
+              <div className="flex h-11 items-center rounded-xl border border-slate-700 bg-slate-900/60 px-3.5 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30 transition-all">
+                <Mail size={16} className="text-slate-400 shrink-0" />
                 <input
                   type="email"
-                  placeholder="Enter your email"
+                  required
+                  placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="
-                    ml-3
-                    w-full
-                    bg-transparent
-                    text-sm
-                    text-white
-                    outline-none
-                    placeholder:text-gray-500
-                  "
+                  className="ml-2.5 w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
                 />
-
               </div>
-
             </div>
 
-            {/* PASSWORD */}
-
+            {/* Password Field */}
             <div>
-
-              <label className="mb-2 block text-sm font-medium text-gray-300">
-                Password
-              </label>
-
-              <div
-                className="
-                  flex
-                  h-[58px]
-                  items-center
-                  rounded-xl
-                  border
-                  border-white/10
-                  bg-white/[0.04]
-                  px-4
-                  transition
-                  focus-within:border-orange-500/70
-                  focus-within:bg-white/[0.06]
-                  focus-within:ring-2
-                  focus-within:ring-orange-500/10
-                "
-              >
-
-                <Lock
-                  size={19}
-                  className="shrink-0 text-gray-500"
-                />
-
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-medium text-slate-300">
+                  Password
+                </label>
+              </div>
+              <div className="flex h-11 items-center rounded-xl border border-slate-700 bg-slate-900/60 px-3.5 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30 transition-all">
+                <Lock size={16} className="text-slate-400 shrink-0" />
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
+                  required
+                  placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="
-                    ml-3
-                    w-full
-                    bg-transparent
-                    text-sm
-                    text-white
-                    outline-none
-                    placeholder:text-gray-500
-                  "
+                  className="ml-2.5 w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
                 />
-
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="
-                    ml-3
-                    shrink-0
-                    text-gray-500
-                    transition
-                    hover:text-white
-                  "
+                  className="text-slate-400 hover:text-white transition-colors"
+                  aria-label="Toggle password visibility"
                 >
-                  {showPassword ? (
-                    <EyeOff size={19} />
-                  ) : (
-                    <Eye size={19} />
-                  )}
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
-
               </div>
-
             </div>
 
-            {/* REMEMBER + FORGOT */}
-
-            <div className="flex items-center justify-between text-sm">
-
-              <label className="flex cursor-pointer items-center gap-2 text-gray-400">
-
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 accent-orange-500"
-                />
-
-                Remember me
-
-              </label>
-
-              <button
-                type="button"
-                className="font-medium text-orange-500 transition hover:text-orange-400"
-              >
-                Forgot Password?
-              </button>
-
-            </div>
-
-            {/* LOGIN BUTTON */}
-
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className="
-                flex
-                h-[58px]
-                w-full
-                items-center
-                justify-center
-                gap-2
-                rounded-xl
-                bg-orange-500
-                font-semibold
-                text-white
-                shadow-lg
-                shadow-orange-500/20
-                transition
-                hover:bg-orange-600
-                hover:shadow-orange-500/30
-                disabled:cursor-not-allowed
-                disabled:opacity-60
-              "
+              className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 font-semibold text-slate-950 transition-colors disabled:opacity-50 text-sm shadow-sm"
             >
-
-              {loading ? "Logging in..." : "Login"}
-
-              {!loading && <ArrowRight size={18} />}
-
+              <span>{loading ? "Signing in..." : "Sign In"}</span>
+              <ArrowRight size={15} />
             </button>
-
-            {/* DIVIDER */}
-
-            <div className="relative py-1">
-
-              <div className="absolute left-0 top-1/2 h-px w-full bg-white/10" />
-
-              <span
-                className="
-                  relative
-                  mx-auto
-                  block
-                  w-fit
-                  bg-[#101625]
-                  px-4
-                  text-xs
-                  text-gray-500
-                "
-              >
-                OR
-              </span>
-
-            </div>
-
-            {/* GOOGLE */}
-
-            <button
-              type="button"
-              className="
-                flex
-                h-[58px]
-                w-full
-                items-center
-                justify-center
-                rounded-xl
-                border
-                border-white/10
-                bg-white/[0.03]
-                font-medium
-                text-gray-300
-                transition
-                hover:bg-white/[0.07]
-                hover:text-white
-              "
-            >
-              Continue with Google
-            </button>
-
           </form>
 
-          {/* =========================
-              REGISTER
-          ========================== */}
+          {/* Divider */}
+          <div className="relative my-5 flex items-center justify-center">
+            <div className="w-full border-t border-slate-800" />
+            <span className="absolute bg-[#0E1322] px-3 text-[11px] font-medium uppercase tracking-wider text-slate-500">
+              or continue with
+            </span>
+          </div>
 
-          <p className="mt-7 text-center text-sm text-gray-500">
+          {/* Google Sign In Button */}
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-slate-700 bg-slate-900/60 hover:bg-slate-800 hover:border-slate-600 font-medium text-slate-200 transition-colors text-sm"
+          >
+            <GoogleIcon />
+            <span>Sign in with Google</span>
+          </button>
 
-            Don't have an account?{" "}
-
-            <Link
-              to="/register"
-              className="font-semibold text-orange-500 transition hover:text-orange-400"
-            >
-              Create Account
-            </Link>
-
-          </p>
+          {/* Switch to Register */}
+          <div className="mt-6 pt-5 border-t border-slate-800 text-center">
+            <p className="text-xs text-slate-400">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="font-semibold text-emerald-400 hover:text-emerald-300 transition-colors ml-1"
+              >
+                Create now
+              </Link>
+            </p>
+          </div>
 
         </div>
+      </div>
 
+      {/* Simple Footer */}
+      <div className="py-5 text-center text-xs text-slate-500">
+        © {new Date().getFullYear()} SpendWise. Encrypted & Secure.
       </div>
 
     </main>
