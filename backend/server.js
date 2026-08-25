@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://expense-tracker-jet-phi-62.vercel.app",
   })
 );
 
